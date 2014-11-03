@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<!-- identifies MVC controllers -->
+	<context:component-scan base-package="de.nexum.commerce.frontend.controller" />
+ 
+ 	<!-- enables Spring MVC annotations -->
+	<mvc:annotation-driven />
+	
+  	<!-- serves static resources via HTTP GET requests -->
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    
+	<!-- ensures that the DispatcherServlet can be mapped to '/' and
+		that static resources are still served by the container's default servlet -->
+	<mvc:default-servlet-handler/>    
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>    
+
+</beans>
