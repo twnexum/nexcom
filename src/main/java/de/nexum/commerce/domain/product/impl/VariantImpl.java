@@ -2,6 +2,9 @@ package de.nexum.commerce.domain.product.impl;
 
 import java.util.Map;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
+import de.nexum.commerce.domain.patterns.impl.AbstractIdentifiableItemImpl;
 import de.nexum.commerce.domain.product.Price;
 import de.nexum.commerce.domain.product.Variant;
 import de.nexum.commerce.domain.product.VariantProduct;
@@ -9,20 +12,19 @@ import de.nexum.commerce.domain.product.VariantProduct;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public class VariantImpl implements Variant {
+public class VariantImpl extends AbstractIdentifiableItemImpl implements Variant {
 
-	private String id;	
 	private Map<String, String> attributes;
-	private Price price;
-	private VariantProduct product;
+	private Price price;	
+	@DBRef private VariantProduct product;
 	
-	@Override
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
+	public VariantImpl(String id, VariantProduct product, Price price, Map<String, String> attributes) {
+		
+		super(id);
+		
+		this.product = product;
+		this.price = price;
+		this.attributes = attributes;
 	}
 
 	@Override
