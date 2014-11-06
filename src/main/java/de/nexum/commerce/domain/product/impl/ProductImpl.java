@@ -47,7 +47,7 @@ public class ProductImpl extends AbstractIdentifiableItemImpl implements Product
 			return false;
 		}
 
-		Product otherProduct = (ProductImpl) obj;
+		Product otherProduct = (Product) obj;
 		return otherProduct.isVariantProduct().equals(this.isVariantProduct())
 				&& otherProduct.getPrice().equals(this.getPrice())
 				&& otherProduct.getAttributes().equals(this.getAttributes());

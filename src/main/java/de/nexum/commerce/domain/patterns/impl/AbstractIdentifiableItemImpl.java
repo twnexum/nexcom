@@ -11,7 +11,7 @@ public abstract class AbstractIdentifiableItemImpl implements IdentifiableItem {
 
 	public AbstractIdentifiableItemImpl(String id) {
 		super();
-		this.id = id;
+		this.id = id.trim();
 	}
 
 	@Override

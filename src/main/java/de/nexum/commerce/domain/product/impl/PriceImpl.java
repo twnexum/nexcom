@@ -31,7 +31,7 @@ public class PriceImpl extends AbstractIdentifiableItemImpl implements Price {
 	
 	public PriceImpl(String id, String productId, BigDecimal amount, Currency currency) {
 		super(id);
-		this.productId = productId;
+		this.productId = productId.trim();
 		this.amount = amount;
 		this.currency = currency;
 	}

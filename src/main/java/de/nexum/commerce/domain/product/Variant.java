@@ -8,6 +8,6 @@ import de.nexum.commerce.domain.patterns.CartItem;
  */
 public interface Variant extends CartItem {
 	
-	VariantProduct getProduct();
+	String getProductId();
 	
 }

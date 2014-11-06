@@ -37,6 +37,7 @@ public abstract class AbstractTest implements ApplicationContextAware {
 			stmt.execute("DELETE FROM PRODUCTS");
 			stmt.execute("DELETE FROM PRICES");
 			stmt.execute("DELETE FROM ATTRIBUTES");
+			stmt.execute("DELETE FROM INVENTORIES");
 			stmt.close();
 		} catch (SQLException e) {
 			throw new Exception(e);

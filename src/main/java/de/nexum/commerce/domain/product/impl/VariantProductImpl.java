@@ -18,11 +18,11 @@ public class VariantProductImpl extends ProductImpl implements VariantProduct {
 	private Set<String> variantAttributeTuple;
 	
 	public VariantProductImpl(Set<Attribute> attributes, Price price, Set<Variant> variants, Set<String> variantAttributeTuple) {
-		this(UUID.randomUUID().toString(), attributes, price, variants, variantAttributeTuple);
+		this(UUID.randomUUID().toString(), attributes, variants, variantAttributeTuple);
 	}
 	
-	public VariantProductImpl(String id, Set<Attribute> attributes, Price price, Set<Variant> variants, Set<String> variantAttributeTuple) {
-		super(id, attributes, price);
+	public VariantProductImpl(String id, Set<Attribute> attributes, Set<Variant> variants, Set<String> variantAttributeTuple) {
+		super(id, attributes, null);
 		this.variants = variants;
 		this.variantAttributeTuple = variantAttributeTuple;
 	}
@@ -46,5 +46,22 @@ public class VariantProductImpl extends ProductImpl implements VariantProduct {
 	public Boolean isVariantProduct() {
 		return Boolean.TRUE;
 	}	
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+
+		if (VariantProduct.class.isAssignableFrom(obj.getClass()) == false) {
+			return false;
+		}
+
+		VariantProduct otherVariantProduct = (VariantProduct) obj;
+		return otherVariantProduct.isVariantProduct().equals(this.isVariantProduct())
+				&& otherVariantProduct.getAttributes().equals(this.getAttributes())
+				&& otherVariantProduct.getVariants().equals(this.getVariants())
+				&& otherVariantProduct.getVariantAttributeTuple().equals(this.getVariantAttributeTuple());			
+	}
 
 }

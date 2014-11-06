@@ -18,11 +18,11 @@ public class AttributeImpl extends AbstractIdentifiableItemImpl implements Attri
 		this(UUID.randomUUID().toString(), productId, key, value);
 	}
 	
-	public AttributeImpl(String id, String productId, String key, String value) {
-		super(id);
+	public AttributeImpl(String id, String productId, String key, String value) {		
+		super(id);		
 		this.productId = productId;
-		this.key = key;
-		this.value = value;
+		this.key = key.toLowerCase().trim();
+		this.value = value.trim();
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class AttributeImpl extends AbstractIdentifiableItemImpl implements Attri
 		}
 
 		Attribute otherProductAttribute = (Attribute) obj;
-		return otherProductAttribute.getKey().equals(this.getKey())
+		return otherProductAttribute.getKey().equalsIgnoreCase(this.getKey())
 				&& otherProductAttribute.getValue().equals(this.getValue());
 	}
 	

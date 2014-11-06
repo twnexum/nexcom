@@ -1,4 +1,4 @@
-package de.nexum.commerce.services;
+package de.nexum.commerce.frontend.services;
 
 import de.nexum.commerce.domain.address.BillingAddress;
 import de.nexum.commerce.domain.address.ShippingAddress;

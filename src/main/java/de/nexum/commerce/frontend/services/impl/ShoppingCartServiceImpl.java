@@ -1,4 +1,4 @@
-package de.nexum.commerce.services.impl;
+package de.nexum.commerce.frontend.services.impl;
 
 import java.math.BigDecimal;
 import java.util.Currency;
@@ -15,7 +15,7 @@ import de.nexum.commerce.domain.product.Price;
 import de.nexum.commerce.domain.product.Product;
 import de.nexum.commerce.domain.product.Variant;
 import de.nexum.commerce.domain.product.impl.PriceImpl;
-import de.nexum.commerce.services.ShoppingCartService;
+import de.nexum.commerce.frontend.services.ShoppingCartService;
 
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>

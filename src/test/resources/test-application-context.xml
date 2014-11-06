@@ -19,22 +19,30 @@
 		<property name="password" value="junit" />
 	</bean>
 	
-	<bean id="priceDAO" class="de.nexum.commerce.dao.impl.PgPriceDAOImpl">
+	<bean id="priceDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericPriceDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<bean id="attributeDAO" class="de.nexum.commerce.dao.impl.PgAttributeDAOImpl">
+	<bean id="attributeDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericAttributeDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<bean id="productDAO" class="de.nexum.commerce.dao.impl.PgProductDAOImpl">
-		<property name="dataSource" ref="dataSource" />
-		<property name="priceDAO" ref="priceDAO" />
-		<property name="attributeDAO" ref="attributeDAO" />		
+	<bean id="productDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericProductDAOImpl">
+		<property name="dataSource" ref="dataSource" />		
+	</bean>	
+	
+	<bean id="variantDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericVariantDAOImpl">
+		<property name="dataSource" ref="dataSource" />		
 	</bean>			
-
-	<bean id="productManager" class="de.nexum.commerce.manager.impl.ProductManagerImpl">
-		<property name="productDAO" ref="productDAO" />
-	</bean>
+	
+	<bean id="variantProductDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericVariantProductDAOImpl">
+		<property name="dataSource" ref="dataSource" />				
+	</bean>	
+	
+	<bean id="inventoryDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericInventoryDAOImpl">
+		<property name="dataSource" ref="dataSource" />				
+	</bean>		
+	
+	<bean id="repositoryService" class="de.nexum.commerce.backend.services.impl.RepositoryServiceImpl" />						
 
 </beans>

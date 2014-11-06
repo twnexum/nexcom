@@ -1,4 +1,4 @@
-package de.nexum.commerce.services;
+package de.nexum.commerce.frontend.services;
 
 import de.nexum.commerce.domain.cart.CartPosition;
 import de.nexum.commerce.domain.cart.ShoppingCart;

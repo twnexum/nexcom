@@ -1,11 +1,13 @@
-package de.nexum.commerce.services.impl;
+package de.nexum.commerce.frontend.services.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.nexum.commerce.backend.services.RepositoryService;
 import de.nexum.commerce.domain.inventory.InventoryPosition;
 import de.nexum.commerce.domain.patterns.CartItem;
 import de.nexum.commerce.domain.product.Product;
@@ -13,7 +15,7 @@ import de.nexum.commerce.domain.product.Variant;
 import de.nexum.commerce.domain.product.VariantProduct;
 import de.nexum.commerce.domain.storefront.StorefrontPosition;
 import de.nexum.commerce.domain.storefront.impl.StorefrontPositionImpl;
-import de.nexum.commerce.services.StorefrontService;
+import de.nexum.commerce.frontend.services.StorefrontService;
 import de.nexum.commerce.util.CartItemPriceComparator;
 
 /**
@@ -21,6 +23,9 @@ import de.nexum.commerce.util.CartItemPriceComparator;
  */
 @Service
 public class StorefrontServiceImpl implements StorefrontService {
+	
+	@Autowired
+	private RepositoryService repositoryService;
 
 	@Override
 	public List<StorefrontPosition> getStorefrontPositions(List<InventoryPosition> inventoryPositions) {
@@ -29,7 +34,7 @@ public class StorefrontServiceImpl implements StorefrontService {
 		
 		for (InventoryPosition nextInventoryPosition : inventoryPositions) {
 			
-			CartItem cartItem = nextInventoryPosition.getCartItem();
+			CartItem cartItem = repositoryService.findProductByID(nextInventoryPosition.getProductId());
 			
 			StorefrontPositionImpl storefrontPosition = new StorefrontPositionImpl();
 			storefrontPosition.setCartItem(cartItem);

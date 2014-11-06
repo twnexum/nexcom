@@ -1,13 +1,13 @@
 package de.nexum.commerce.domain.inventory;
 
-import de.nexum.commerce.domain.patterns.CartItem;
+import de.nexum.commerce.domain.patterns.IdentifiableItem;
 
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public interface InventoryPosition {
+public interface InventoryPosition extends IdentifiableItem {
 	
-	CartItem getCartItem();
+	String getProductId();
 	
 	Integer getAvailableQuantity();
 	

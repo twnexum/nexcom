@@ -1,21 +1,25 @@
 package de.nexum.commerce.domain.inventory.impl;
 
+import java.util.UUID;
+
 import de.nexum.commerce.domain.inventory.InventoryPosition;
-import de.nexum.commerce.domain.patterns.CartItem;
+import de.nexum.commerce.domain.patterns.impl.AbstractIdentifiableItemImpl;
 
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public class InventoryPositionImpl implements InventoryPosition {
+public class InventoryPositionImpl extends AbstractIdentifiableItemImpl implements InventoryPosition {
 	
 	private Integer availableQuantity;
-	private CartItem cartItem;
+	private String productId;
 	
-	public InventoryPositionImpl(CartItem cartItem, Integer availableQuantity) {
-		
-		super();
-		
-		this.cartItem = cartItem;
+	public InventoryPositionImpl(String productId, Integer availableQuantity) {
+		this(UUID.randomUUID().toString(), productId, availableQuantity);
+	}
+	
+	public InventoryPositionImpl(String id, String productId, Integer availableQuantity) {		
+		super(id);		
+		this.productId = productId;
 		this.availableQuantity = availableQuantity;
 	}
 
@@ -25,8 +29,23 @@ public class InventoryPositionImpl implements InventoryPosition {
 	}
 
 	@Override
-	public CartItem getCartItem() {
-		return cartItem;
+	public String getProductId() {
+		return productId;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+
+		if (InventoryPosition.class.isAssignableFrom(obj.getClass()) == false) {
+			return false;
+		}
+
+		InventoryPosition otherInventoryPosition = (InventoryPosition) obj;
+		return otherInventoryPosition.getProductId().equals(this.getProductId())
+				&& otherInventoryPosition.getAvailableQuantity().equals(this.getAvailableQuantity());
 	}
 
 }

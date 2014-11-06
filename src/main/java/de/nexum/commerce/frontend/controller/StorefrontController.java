@@ -9,15 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import de.nexum.commerce.backend.services.RepositoryService;
 import de.nexum.commerce.domain.cart.ShoppingCart;
 import de.nexum.commerce.domain.inventory.InventoryPosition;
+import de.nexum.commerce.domain.patterns.CartItem;
 import de.nexum.commerce.domain.product.Price;
 import de.nexum.commerce.domain.storefront.StorefrontPosition;
+import de.nexum.commerce.frontend.services.InventoryService;
+import de.nexum.commerce.frontend.services.ShoppingCartService;
+import de.nexum.commerce.frontend.services.StorefrontService;
 import de.nexum.commerce.frontend.settings.StorefrontState;
 import de.nexum.commerce.frontend.settings.StorefrontViewState;
-import de.nexum.commerce.services.InventoryService;
-import de.nexum.commerce.services.ShoppingCartService;
-import de.nexum.commerce.services.StorefrontService;
 
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
@@ -39,6 +41,9 @@ public class StorefrontController {
 	
 	@Autowired
 	private StorefrontService storefrontService;
+	
+	@Autowired
+	private RepositoryService repositoryService;
 
 	@RequestMapping(value = "/storefront", method = RequestMethod.GET)
 	public String listInventory(ModelMap model, @RequestParam(value = "compactView", required = false) Boolean compactView) {
@@ -72,10 +77,11 @@ public class StorefrontController {
 
     	if (quantity > 0) {
     	
+    		CartItem cartItem = (CartItem) repositoryService.findProductByID(cartItemId);
     		InventoryPosition inventoryPosition = inventoryService.findInventoryByCartItemId(cartItemId);
     		if (inventoryPosition != null && inventoryPosition.getAvailableQuantity() >= quantity) {
     		
-        		shoppingCartService.addToCart(shoppingCart, inventoryPosition.getCartItem(), quantity);
+        		shoppingCartService.addToCart(shoppingCart, cartItem, quantity);
     		}
     	}
     	

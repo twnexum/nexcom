@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import de.nexum.commerce.backend.services.RepositoryService;
 import de.nexum.commerce.domain.cart.CartPosition;
 import de.nexum.commerce.domain.cart.ShoppingCart;
 import de.nexum.commerce.domain.inventory.InventoryPosition;
+import de.nexum.commerce.domain.patterns.CartItem;
 import de.nexum.commerce.domain.product.Price;
-import de.nexum.commerce.services.InventoryService;
-import de.nexum.commerce.services.ShoppingCartService;
+import de.nexum.commerce.frontend.services.InventoryService;
+import de.nexum.commerce.frontend.services.ShoppingCartService;
 import de.nexum.commerce.util.CartPositionCartItemAttributeComparator;
 
 /**
@@ -32,6 +34,9 @@ public class ShoppingCartController {
 	
 	@Autowired
 	private ShoppingCart shoppingCart;
+	
+	@Autowired
+	private RepositoryService repositoryService;
 
 	@RequestMapping(value = "/showCart", method = RequestMethod.GET)
 	public String showCart(ModelMap model) {
@@ -52,10 +57,11 @@ public class ShoppingCartController {
     @RequestMapping(value = "/removeFromCart", method = RequestMethod.POST)
 	public String removeFromCart(ModelMap model, @RequestParam(value = "productId", required = true) String productId) {
 
+    	CartItem cartItem = (CartItem) repositoryService.findProductByID(productId);
 		InventoryPosition inventoryPosition = inventoryService.findInventoryByCartItemId(productId);
 		if (inventoryPosition != null) {
 		
-			shoppingCartService.removeFromCart(shoppingCart, inventoryPosition.getCartItem(), Integer.MAX_VALUE);
+			shoppingCartService.removeFromCart(shoppingCart, cartItem, Integer.MAX_VALUE);
 		}
 		
 		List<CartPosition> cartPositions = shoppingCart.getCartPositions();
@@ -76,12 +82,13 @@ public class ShoppingCartController {
 
     	if (quantity > 0) {
     	
+    		CartItem cartItem = (CartItem) repositoryService.findProductByID(productId);
     		InventoryPosition inventoryPosition = inventoryService.findInventoryByCartItemId(productId);
     		if (inventoryPosition != null) {
     			
-    			if (shoppingCart.containsCartPosition(inventoryPosition.getCartItem()) && inventoryPosition.getAvailableQuantity() >= quantity) {
+    			if (shoppingCart.containsCartPosition(cartItem) && inventoryPosition.getAvailableQuantity() >= quantity) {
     				
-    				CartPosition cartPosition = shoppingCart.getCartPosition(inventoryPosition.getCartItem());
+    				CartPosition cartPosition = shoppingCart.getCartPosition(cartItem);
     				if (cartPosition.getQuantity() < quantity) {
     					
     					Integer delta = Integer.valueOf(quantity - cartPosition.getQuantity());
