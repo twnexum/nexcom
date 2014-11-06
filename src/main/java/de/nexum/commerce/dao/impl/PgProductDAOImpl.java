@@ -40,6 +40,8 @@ public class PgProductDAOImpl extends JdbcDaoSupport implements GenericDAO<Produ
 
 	@Override
 	public void delete(Product product) {		
+		priceDAO.delete(product.getPrice());
+		attributeDAO.delete(product.getAttributes());
 		getJdbcTemplate().update(SQL_DELETE, new Object[] { product.getId(), });
 	}
 

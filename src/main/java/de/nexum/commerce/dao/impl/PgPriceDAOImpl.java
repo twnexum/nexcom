@@ -16,7 +16,7 @@ import de.nexum.commerce.domain.product.impl.PriceImpl;
 public class PgPriceDAOImpl extends JdbcDaoSupport implements GenericDAO<Price> {
 	
 	private static final String SQL_INSERT = "INSERT INTO PRICES (ID, ITEM_ID, AMOUNT, CURRENCY_CODE) VALUES (?,?,?,?)";
-	private static final String SQL_DELETE = "DELETE FROM PRICES WHERE ITEM_ID = ?";
+	private static final String SQL_DELETE = "DELETE FROM PRICES WHERE ID = ?";
 	private static final String SQL_SELECT = "SELECT ID, ITEM_ID, AMOUNT, CURRENCY_CODE FROM PRICES WHERE ITEM_ID = ?";
 
 	@Override
