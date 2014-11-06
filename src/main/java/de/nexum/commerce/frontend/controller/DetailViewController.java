@@ -24,6 +24,7 @@ import de.nexum.commerce.frontend.settings.StorefrontState;
 import de.nexum.commerce.services.InventoryService;
 import de.nexum.commerce.services.ShoppingCartService;
 import de.nexum.commerce.services.StorefrontService;
+import de.nexum.commerce.util.AttributeUtils;
 
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
@@ -70,6 +71,8 @@ public class DetailViewController {
 					
 					for (Variant nextVariant : variantProduct.getVariants()) {
 						
+						Map<String, String> variantAttributesMap = AttributeUtils.asMap(nextVariant.getAttributes());
+						
 						StringBuffer buf = new StringBuffer();						
 						for (String nextVariantAttribute : variantAttributeTuple) {
 							
@@ -77,13 +80,13 @@ public class DetailViewController {
 								buf.append(" / ");
 							}
 							
-							buf.append(nextVariant.getAttributes().get(nextVariantAttribute));
+							buf.append(variantAttributesMap.get(nextVariantAttribute));
 						}
 						
 						buf.append(" : ").append(nextVariant.getPrice());
 						
 						variantSelectionsById.put(nextVariant.getId(), buf.toString());
-						variantImagesById.put(nextVariant.getId(), nextVariant.getAttributes().get("image"));
+						variantImagesById.put(nextVariant.getId(), variantAttributesMap.get("image"));
 					}
 					
 					model.addAttribute("variantSelectionsById", variantSelectionsById);

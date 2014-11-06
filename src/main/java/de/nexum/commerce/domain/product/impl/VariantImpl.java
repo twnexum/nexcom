@@ -1,7 +1,11 @@
 package de.nexum.commerce.domain.product.impl;
 
-import java.util.Map;
+import java.util.Collections;
+import java.util.Set;
+import java.util.UUID;
 
+import de.nexum.commerce.domain.patterns.impl.AbstractIdentifiableItemImpl;
+import de.nexum.commerce.domain.product.Attribute;
 import de.nexum.commerce.domain.product.Price;
 import de.nexum.commerce.domain.product.Variant;
 import de.nexum.commerce.domain.product.VariantProduct;
@@ -9,20 +13,21 @@ import de.nexum.commerce.domain.product.VariantProduct;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public class VariantImpl implements Variant {
+public class VariantImpl extends AbstractIdentifiableItemImpl implements Variant {
 
-	private String id;	
-	private Map<String, String> attributes;
+	private Set<Attribute> attributes;
 	private Price price;
 	private VariantProduct product;
 	
-	@Override
-	public String getId() {
-		return id;
+	public VariantImpl(VariantProduct product, Set<Attribute> attributes, Price price) {
+		this(UUID.randomUUID().toString(), product, attributes, price);
 	}
 	
-	public void setId(String id) {
-		this.id = id;
+	public VariantImpl(String id, VariantProduct product, Set<Attribute> attributes, Price price) {
+		super(id);
+		this.product = product;
+		this.attributes = attributes;
+		this.price = price;
 	}
 
 	@Override
@@ -30,26 +35,14 @@ public class VariantImpl implements Variant {
 		return price;
 	}
 
-	public void setPrice(Price price) {
-		this.price = price;
-	}
-
 	@Override
-	public Map<String, String> getAttributes() {
-		return attributes;
-	}
-
-	public void setAttributes(Map<String, String> attributes) {
-		this.attributes = attributes;
+	public Set<Attribute> getAttributes() {
+		return Collections.unmodifiableSet(attributes);
 	}
 
 	@Override
 	public VariantProduct getProduct() {
 		return product;
-	}
-
-	public void setProduct(VariantProduct product) {
-		this.product = product;
 	}
 
 }

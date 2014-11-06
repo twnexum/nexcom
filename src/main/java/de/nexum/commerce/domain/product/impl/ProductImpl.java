@@ -1,36 +1,30 @@
 package de.nexum.commerce.domain.product.impl;
 
 import java.util.Collections;
-import java.util.Map;
+import java.util.Set;
 
+import de.nexum.commerce.domain.patterns.impl.AbstractIdentifiableItemImpl;
+import de.nexum.commerce.domain.product.Attribute;
 import de.nexum.commerce.domain.product.Price;
 import de.nexum.commerce.domain.product.Product;
 
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public class ProductImpl implements Product {
-	
-	private String id;	
-	private Map<String, String> attributes;
+public class ProductImpl extends AbstractIdentifiableItemImpl implements Product {
+		
+	private Set<Attribute> attributes;
 	private Price price;
 	
-	@Override
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
+	public ProductImpl(String id, Set<Attribute> attributes, Price price) {		
+		super(id);		
+		this.attributes = attributes;		
+		this.price = price;
 	}
 	
 	@Override
-	public Map<String, String> getAttributes() {
-		return Collections.unmodifiableMap(attributes);
-	}
-	
-	public void setAttributes(Map<String, String> attributes) {
-		this.attributes = attributes;
+	public Set<Attribute> getAttributes() {
+		return Collections.unmodifiableSet(attributes);
 	}
 
 	@Override
@@ -38,13 +32,25 @@ public class ProductImpl implements Product {
 		return price;
 	}
 
-	public void setPrice(Price price) {
-		this.price = price;
-	}
-
 	@Override
-	public boolean isVariantProduct() {
-		return false;
+	public Boolean isVariantProduct() {
+		return Boolean.FALSE;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+
+		if (Product.class.isAssignableFrom(obj.getClass()) == false) {
+			return false;
+		}
+
+		Product otherProduct = (ProductImpl) obj;
+		return otherProduct.isVariantProduct().equals(this.isVariantProduct())
+				&& otherProduct.getPrice().equals(this.getPrice())
+				&& otherProduct.getAttributes().equals(this.getAttributes());
 	}
 
 }

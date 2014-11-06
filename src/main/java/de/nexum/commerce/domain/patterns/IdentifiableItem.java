@@ -8,4 +8,6 @@ public interface IdentifiableItem {
 
 	String getId();
 	
+	boolean isIdentical(IdentifiableItem identifiableItem);
+	
 }

@@ -1,6 +1,7 @@
 package de.nexum.commerce.util;
 
 import java.util.Comparator;
+import java.util.Map;
 
 import de.nexum.commerce.domain.cart.CartPosition;
 import de.nexum.commerce.domain.patterns.CartItem;
@@ -23,9 +24,12 @@ public class CartPositionCartItemAttributeComparator implements Comparator<CartP
 	public int compare(CartPosition cartPosition1, CartPosition cartPosition2) {
 		
 		CartItem cartItem1 = cartPosition1.getCartItem();
-		CartItem cartItem2 = cartPosition2.getCartItem();
+		Map<String, String> attributesMap1 = AttributeUtils.asMap(cartItem1.getAttributes());
 		
-		return cartItem1.getAttributes().get(attribute).compareTo(cartItem2.getAttributes().get(attribute));
+		CartItem cartItem2 = cartPosition2.getCartItem();
+		Map<String, String> attributesMap2 = AttributeUtils.asMap(cartItem2.getAttributes());
+		
+		return attributesMap1.get(attribute).compareTo(attributesMap2.get(attribute));
 	}
 
 }

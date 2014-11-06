@@ -36,7 +36,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			BigDecimal itemAmount = cartItem.getPrice().getAmount();
 			BigDecimal cartPositionTotalAmount = itemAmount.multiply(BigDecimal.valueOf(nextCartPosition.getQuantity()));
 			
-			Price cartPositionTotalPrice = new PriceImpl(cartPositionTotalAmount, currency, PriceImpl.DEFAULT_ROUNDING);
+			Price cartPositionTotalPrice = new PriceImpl(null, cartPositionTotalAmount, currency);
 			nextCartPosition.setTotalPrice(cartPositionTotalPrice);
 			
 			if (Product.class.isAssignableFrom(cartItem.getClass()) 
@@ -50,7 +50,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			}			
 		}
 		
-		Price shoppingCartTotalPrice = new PriceImpl(shoppingCartTotalAmount, currency, PriceImpl.DEFAULT_ROUNDING);
+		Price shoppingCartTotalPrice = new PriceImpl(null, shoppingCartTotalAmount, currency);
 		shoppingCart.setTotalPrice(shoppingCartTotalPrice);
 		
 		return shoppingCartTotalPrice;

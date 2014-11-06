@@ -1,0 +1,1 @@
+CREATE ROLE "junit" LOGIN PASSWORD 'junit';
