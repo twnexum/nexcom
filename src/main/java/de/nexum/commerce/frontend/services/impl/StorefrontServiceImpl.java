@@ -17,6 +17,7 @@ import de.nexum.commerce.domain.storefront.StorefrontPosition;
 import de.nexum.commerce.domain.storefront.impl.StorefrontPositionImpl;
 import de.nexum.commerce.frontend.services.StorefrontService;
 import de.nexum.commerce.util.CartItemPriceComparator;
+import de.nexum.commerce.util.StorefrontPositionCartItemAttributeComparator;
 
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
@@ -56,6 +57,8 @@ public class StorefrontServiceImpl implements StorefrontService {
 			
 			storefrontPositions.add(storefrontPosition);
 		}
+		
+		Collections.sort(storefrontPositions, new StorefrontPositionCartItemAttributeComparator("title"));
 		
 		return storefrontPositions;
 	}

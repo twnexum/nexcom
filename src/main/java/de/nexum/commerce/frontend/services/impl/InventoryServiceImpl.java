@@ -48,8 +48,7 @@ public class InventoryServiceImpl implements InventoryService {
 				if (excludeVariants) {
 					
 					Variant variant = (Variant) cartItem;
-					Product product = (Product) repositoryService.findCartItemById(variant.getProductId());
-					inventoryPositionsById.put(product.getId(), new InventoryPositionImpl(product.getId(), Integer.valueOf(0)));
+					inventoryPositionsById.put(variant.getProductId(), new InventoryPositionImpl(variant.getProductId(), Integer.valueOf(0)));
 				} else {
 					inventoryPositionsById.put(cartItem.getId(), nextInventoryPosition);
 				}
