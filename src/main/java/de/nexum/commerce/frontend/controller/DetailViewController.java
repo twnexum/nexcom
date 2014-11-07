@@ -21,7 +21,6 @@ import de.nexum.commerce.domain.product.Price;
 import de.nexum.commerce.domain.product.Product;
 import de.nexum.commerce.domain.product.Variant;
 import de.nexum.commerce.domain.product.VariantProduct;
-import de.nexum.commerce.domain.storefront.StorefrontPosition;
 import de.nexum.commerce.frontend.services.InventoryService;
 import de.nexum.commerce.frontend.services.ShoppingCartService;
 import de.nexum.commerce.frontend.services.StorefrontService;
@@ -54,51 +53,42 @@ public class DetailViewController {
 
 	@RequestMapping(value = "/detailView", method = RequestMethod.GET)
 	public String detailView(ModelMap model, @RequestParam(value = "id", required = true) String cartItemId) {
-	
-		InventoryPosition inventoryPosition = inventoryService.findInventoryByCartItemId(cartItemId);
-		if (inventoryPosition != null) {
+		
+		CartItem cartItem = repositoryService.findCartItemById(cartItemId);		
+		model.addAttribute("cartItem", cartItem);
+		
+		if (VariantProduct.class.isAssignableFrom(cartItem.getClass())) {
 			
-			List<StorefrontPosition> storefrontPositions = storefrontService.getStorefrontPositions(Collections.singletonList(inventoryPosition));
+			VariantProduct variantProduct = (VariantProduct) cartItem;
+			List<String> variantAttributeTuple = new ArrayList<String>(variantProduct.getVariantAttributeTuple());
+			Collections.sort(variantAttributeTuple);
 			
-			StorefrontPosition storefrontPosition = storefrontPositions.get(0);
-			if (storefrontPosition != null) {
+			Map<String, String> variantSelectionsById = new HashMap<String, String>();					
+			Map<String, String> variantImagesById = new HashMap<String, String>();
+			
+			for (Variant nextVariant : variantProduct.getVariants()) {
 				
-				model.addAttribute("storefrontPosition", storefrontPosition);
+				Map<String, String> variantAttributesMap = AttributeUtils.asMap(nextVariant.getAttributes());
 				
-				if (VariantProduct.class.isAssignableFrom(inventoryPosition.getProductId().getClass())) {
+				StringBuffer buf = new StringBuffer();						
+				for (String nextVariantAttribute : variantAttributeTuple) {
 					
-					VariantProduct variantProduct = (VariantProduct) repositoryService.findCartItemById(inventoryPosition.getProductId());
-					List<String> variantAttributeTuple = new ArrayList<String>(variantProduct.getVariantAttributeTuple());
-					Collections.sort(variantAttributeTuple);
-					
-					Map<String, String> variantSelectionsById = new HashMap<String, String>();					
-					Map<String, String> variantImagesById = new HashMap<String, String>();
-					
-					for (Variant nextVariant : variantProduct.getVariants()) {
-						
-						Map<String, String> variantAttributesMap = AttributeUtils.asMap(nextVariant.getAttributes());
-						
-						StringBuffer buf = new StringBuffer();						
-						for (String nextVariantAttribute : variantAttributeTuple) {
-							
-							if (buf.length() > 0) {
-								buf.append(" / ");
-							}
-							
-							buf.append(variantAttributesMap.get(nextVariantAttribute));
-						}
-						
-						buf.append(" : ").append(nextVariant.getPrice());
-						
-						variantSelectionsById.put(nextVariant.getId(), buf.toString());
-						variantImagesById.put(nextVariant.getId(), variantAttributesMap.get("image"));
+					if (buf.length() > 0) {
+						buf.append(" / ");
 					}
 					
-					model.addAttribute("variantSelectionsById", variantSelectionsById);
-					model.addAttribute("variantImagesById", variantImagesById);
-					model.addAttribute("isVariantProduct", Boolean.TRUE);
+					buf.append(variantAttributesMap.get(nextVariantAttribute));
 				}
+				
+				buf.append(" : ").append(nextVariant.getPrice());
+				
+				variantSelectionsById.put(nextVariant.getId(), buf.toString());
+				variantImagesById.put(nextVariant.getId(), variantAttributesMap.get("image"));
 			}
+			
+			model.addAttribute("variantSelectionsById", variantSelectionsById);
+			model.addAttribute("variantImagesById", variantImagesById);
+			model.addAttribute("isVariantProduct", Boolean.TRUE);
 		}
 		
 		Price shoppingCartTotalAmount = shoppingCartService.calculateTotalAmount(shoppingCart);
@@ -114,26 +104,22 @@ public class DetailViewController {
 	public String addToCart(ModelMap model, @RequestParam(value = "cartItemId", required = true) String cartItemId, @RequestParam(value = "quantity", required = true) Integer quantity) {
 
     	CartItem cartItem = (CartItem) repositoryService.findCartItemById(cartItemId);
+    	model.addAttribute("cartItem", cartItem);	
+    	
+		// all model attributes are considered to be exposed as URI template variables in redirect URLs
+		// thus, we add an "id" variable to the model in order to return to the previous detail view
+		if (Variant.class.isAssignableFrom(cartItem.getClass())) {
+			Variant variant = (Variant) cartItem;
+			model.addAttribute("id", variant.getProductId());	
+		} else if (Product.class.isAssignableFrom(cartItem.getClass())) {
+			model.addAttribute("id", cartItem.getId());	
+		}
+    	
 		InventoryPosition inventoryPosition = inventoryService.findInventoryByCartItemId(cartItemId);
 		if (inventoryPosition != null) {
-			
-			List<StorefrontPosition> storefrontPositions = storefrontService.getStorefrontPositions(Collections.singletonList(inventoryPosition));
-			
-			StorefrontPosition storefrontPosition = storefrontPositions.get(0);
-			if (storefrontPosition != null) {
-				model.addAttribute("storefrontPosition", storefrontPosition);
-			}
-			
+						
 			if (quantity > 0 && inventoryPosition.getAvailableQuantity() >= quantity) {	        		
 				shoppingCartService.addToCart(shoppingCart, cartItem, quantity);
-			}
-			
-			// all model attributes are considered to be exposed as URI template variables in redirect URLs
-			// thus, we add an "id" variable to the model in order to return to the previous detail view
-			if (Variant.class.isAssignableFrom(inventoryPosition.getProductId().getClass())) {
-				model.addAttribute("id", inventoryPosition.getProductId());	
-			} else if (Product.class.isAssignableFrom(inventoryPosition.getProductId().getClass())) {
-				model.addAttribute("id", inventoryPosition.getProductId());	
 			}
 		}
 		

@@ -20,9 +20,7 @@
 	<br/>
 
 	<c:choose>
-		<c:when test="${not empty storefrontPosition}">
-			<c:set var="cartItem" value="${storefrontPosition.cartItem}"/>
-			
+		<c:when test="${not empty cartItem}">			
 			<h1>${cartItem.attributesMap.title}</h1>			
 			<p><img id="productImage" src="${cartItem.attributesMap.image}"/></p>			
 			<p>${cartItem.attributesMap.description}</p>

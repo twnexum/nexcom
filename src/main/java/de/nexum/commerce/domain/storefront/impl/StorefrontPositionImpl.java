@@ -11,25 +11,21 @@ public class StorefrontPositionImpl implements StorefrontPosition {
 	
 	private CartItem cartItem;
 	private Price price;
+	
+	public StorefrontPositionImpl(CartItem cartItem, Price price) {
+		super();
+		this.cartItem = cartItem;
+		this.price = price;
+	}
 
 	@Override
 	public CartItem getCartItem() {
 		return cartItem;
 	}
 
-	public void setCartItem(CartItem cartItem) {
-		this.cartItem = cartItem;
-	}
-
 	@Override
 	public Price getPrice() {
 		return price;
-	}
-
-	public void setPrice(Price price) {
-		this.price = price;
-	}
-
-	
+	}	
 
 }
