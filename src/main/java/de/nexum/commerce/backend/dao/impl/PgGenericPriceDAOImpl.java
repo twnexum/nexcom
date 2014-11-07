@@ -6,7 +6,6 @@ import java.util.Collection;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,6 @@ import de.nexum.commerce.domain.product.impl.PriceImpl;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-@Repository
 public class PgGenericPriceDAOImpl extends JdbcDaoSupport implements GenericDAO<Price> {
 	
 	private static final String SQL_INSERT = "INSERT INTO PRICES (ID, ITEM_ID, AMOUNT, CURRENCY_CODE) VALUES (?,?,?,?)";

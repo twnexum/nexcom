@@ -21,8 +21,8 @@ public class AttributeImpl extends AbstractIdentifiableItemImpl implements Attri
 	public AttributeImpl(String id, String productId, String key, String value) {		
 		super(id);		
 		this.productId = productId;
-		this.key = key.toLowerCase().trim();
-		this.value = value.trim();
+		this.key = key;
+		this.value = value;
 	}
 
 	@Override

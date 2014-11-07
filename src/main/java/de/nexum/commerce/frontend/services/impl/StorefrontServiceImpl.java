@@ -34,7 +34,7 @@ public class StorefrontServiceImpl implements StorefrontService {
 		
 		for (InventoryPosition nextInventoryPosition : inventoryPositions) {
 			
-			CartItem cartItem = repositoryService.findProductByID(nextInventoryPosition.getProductId());
+			CartItem cartItem = repositoryService.findCartItemById(nextInventoryPosition.getProductId());
 			
 			StorefrontPositionImpl storefrontPosition = new StorefrontPositionImpl();
 			storefrontPosition.setCartItem(cartItem);

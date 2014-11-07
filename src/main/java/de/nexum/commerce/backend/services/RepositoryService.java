@@ -3,6 +3,7 @@ package de.nexum.commerce.backend.services;
 import java.util.List;
 
 import de.nexum.commerce.domain.inventory.InventoryPosition;
+import de.nexum.commerce.domain.patterns.CartItem;
 import de.nexum.commerce.domain.product.Product;
 
 /**
@@ -12,7 +13,7 @@ public interface RepositoryService {
 
 	void saveProduct(Product product);
 	
-	Product findProductByID(String productID);
+	CartItem findCartItemById(String cartItemId);
 	
 	void saveInventory(InventoryPosition inventoryPosition);
 	

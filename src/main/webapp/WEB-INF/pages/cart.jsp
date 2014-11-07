@@ -27,7 +27,7 @@
 						<input type="hidden" name="productId" value="${product.id}" />			
 					</form>
 					<tr>
-						<td>${product.attributes.title}</td>
+						<td>${product.attributesMap.title}</td>
 						<td>${product.price}</td>
 						<td>
 							<form name="updateQuantity_${product.id}" id="updateQuantity_${product.id}" action="/updateQuantity" method="post">

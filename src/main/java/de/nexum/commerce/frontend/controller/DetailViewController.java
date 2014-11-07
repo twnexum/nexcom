@@ -67,7 +67,7 @@ public class DetailViewController {
 				
 				if (VariantProduct.class.isAssignableFrom(inventoryPosition.getProductId().getClass())) {
 					
-					VariantProduct variantProduct = (VariantProduct) repositoryService.findProductByID(inventoryPosition.getProductId());
+					VariantProduct variantProduct = (VariantProduct) repositoryService.findCartItemById(inventoryPosition.getProductId());
 					List<String> variantAttributeTuple = new ArrayList<String>(variantProduct.getVariantAttributeTuple());
 					Collections.sort(variantAttributeTuple);
 					
@@ -113,7 +113,7 @@ public class DetailViewController {
     @RequestMapping(value = "/detailViewAddToCart", method = RequestMethod.POST)
 	public String addToCart(ModelMap model, @RequestParam(value = "cartItemId", required = true) String cartItemId, @RequestParam(value = "quantity", required = true) Integer quantity) {
 
-    	CartItem cartItem = (CartItem) repositoryService.findProductByID(cartItemId);
+    	CartItem cartItem = (CartItem) repositoryService.findCartItemById(cartItemId);
 		InventoryPosition inventoryPosition = inventoryService.findInventoryByCartItemId(cartItemId);
 		if (inventoryPosition != null) {
 			

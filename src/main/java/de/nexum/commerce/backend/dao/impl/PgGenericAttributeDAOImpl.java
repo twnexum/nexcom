@@ -13,7 +13,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +23,6 @@ import de.nexum.commerce.domain.product.impl.AttributeImpl;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-@Repository
 public class PgGenericAttributeDAOImpl extends JdbcDaoSupport implements GenericDAO<Set<Attribute>> {
 
 	private static final String SQL_INSERT = "INSERT INTO ATTRIBUTES (ID, ITEM_ID, ATTR_KEY, ATTR_VALUE) VALUES (?,?,?,?)";

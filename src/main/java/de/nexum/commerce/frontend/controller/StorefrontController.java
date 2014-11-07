@@ -77,7 +77,7 @@ public class StorefrontController {
 
     	if (quantity > 0) {
     	
-    		CartItem cartItem = (CartItem) repositoryService.findProductByID(cartItemId);
+    		CartItem cartItem = (CartItem) repositoryService.findCartItemById(cartItemId);
     		InventoryPosition inventoryPosition = inventoryService.findInventoryByCartItemId(cartItemId);
     		if (inventoryPosition != null && inventoryPosition.getAvailableQuantity() >= quantity) {
     		

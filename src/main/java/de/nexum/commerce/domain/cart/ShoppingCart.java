@@ -7,13 +7,14 @@ import de.nexum.commerce.domain.address.BillingAddress;
 import de.nexum.commerce.domain.address.EmailAddress;
 import de.nexum.commerce.domain.address.ShippingAddress;
 import de.nexum.commerce.domain.patterns.CartItem;
+import de.nexum.commerce.domain.patterns.IdentifiableItem;
 import de.nexum.commerce.domain.payment.Payment;
 import de.nexum.commerce.domain.product.Price;
 
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public interface ShoppingCart {
+public interface ShoppingCart extends IdentifiableItem {
 	
 	CartPosition addCartPosition(CartPosition cartPosition);
 	

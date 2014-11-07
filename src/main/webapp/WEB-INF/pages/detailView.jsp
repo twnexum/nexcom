@@ -23,9 +23,9 @@
 		<c:when test="${not empty storefrontPosition}">
 			<c:set var="cartItem" value="${storefrontPosition.cartItem}"/>
 			
-			<h1>${cartItem.attributes.title}</h1>			
-			<p><img id="productImage" src="${cartItem.attributes.image}"/></p>			
-			<p>${cartItem.attributes.description}</p>
+			<h1>${cartItem.attributesMap.title}</h1>			
+			<p><img id="productImage" src="${cartItem.attributesMap.image}"/></p>			
+			<p>${cartItem.attributesMap.description}</p>
 			
 			<c:choose>
 				<c:when test="${isVariantProduct}">

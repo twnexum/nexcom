@@ -57,7 +57,7 @@ public class ShoppingCartController {
     @RequestMapping(value = "/removeFromCart", method = RequestMethod.POST)
 	public String removeFromCart(ModelMap model, @RequestParam(value = "productId", required = true) String productId) {
 
-    	CartItem cartItem = (CartItem) repositoryService.findProductByID(productId);
+    	CartItem cartItem = (CartItem) repositoryService.findCartItemById(productId);
 		InventoryPosition inventoryPosition = inventoryService.findInventoryByCartItemId(productId);
 		if (inventoryPosition != null) {
 		
@@ -82,7 +82,7 @@ public class ShoppingCartController {
 
     	if (quantity > 0) {
     	
-    		CartItem cartItem = (CartItem) repositoryService.findProductByID(productId);
+    		CartItem cartItem = (CartItem) repositoryService.findCartItemById(productId);
     		InventoryPosition inventoryPosition = inventoryService.findInventoryByCartItemId(productId);
     		if (inventoryPosition != null) {
     			

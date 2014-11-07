@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +25,6 @@ import de.nexum.commerce.util.VariantAttributeUtils;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-@Repository
 public class PgGenericVariantProductDAOImpl extends JdbcDaoSupport implements GenericDAO<VariantProduct> {
 	
 	private static final String SQL_INSERT = "INSERT INTO PRODUCTS (ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES) VALUES (?,TRUE,NULL,?)";
@@ -37,14 +35,14 @@ public class PgGenericVariantProductDAOImpl extends JdbcDaoSupport implements Ge
 	private GenericDAO<Set<Attribute>> attributeDAO;
 	
 	@Autowired
-	private GenericDAO<Set<Variant>> variantDAO;
+	private GenericDAO<Set<Variant>> collectionVariantDAO;
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public void save(final VariantProduct variantProduct) {		
 		
 		attributeDAO.save(variantProduct.getAttributes());	
-		variantDAO.save(variantProduct.getVariants());
+		collectionVariantDAO.save(variantProduct.getVariants());
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(final Connection conn) throws SQLException {
@@ -72,7 +70,7 @@ public class PgGenericVariantProductDAOImpl extends JdbcDaoSupport implements Ge
 	@Transactional(propagation = Propagation.MANDATORY)
 	public void delete(VariantProduct variantProduct) {		
 		attributeDAO.delete(variantProduct.getAttributes());
-		variantDAO.delete(variantProduct.getVariants());
+		collectionVariantDAO.delete(variantProduct.getVariants());
 		getJdbcTemplate().update(SQL_DELETE, new Object[] { variantProduct.getId() });
 	}
 
@@ -80,7 +78,7 @@ public class PgGenericVariantProductDAOImpl extends JdbcDaoSupport implements Ge
 	public VariantProduct findByID(String productId) {
 		
 		final Set<Attribute> attributes = attributeDAO.findByID(productId);
-		final Set<Variant> variants = variantDAO.findByID(productId);
+		final Set<Variant> variants = collectionVariantDAO.findByID(productId);
 
 		VariantProduct product = (VariantProduct) getJdbcTemplate().queryForObject(
 			SQL_SELECT, new Object[] { productId }, new RowMapper<Product>() {

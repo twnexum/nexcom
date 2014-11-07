@@ -77,7 +77,7 @@ public class PgGenericInventoryDAOImpl extends JdbcDaoSupport implements Generic
 				List<InventoryPosition> inventoryPositions = new ArrayList<InventoryPosition>();
 				while (res.next()) {
 					inventoryPositions.add(new InventoryPositionImpl(res.getString("ID"), 
-							res.getString("ITEM_ID"),	res.getInt("QUANTITY")));
+							res.getString("ITEM_ID"), res.getInt("QUANTITY")));
 				}
 				return inventoryPositions;
 			}

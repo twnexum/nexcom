@@ -61,7 +61,7 @@ public class RepositoryServiceImplTest extends AbstractTest {
 		Product newProduct = new ProductImpl(productId, attributes, price);
 		repositoryService.saveProduct(newProduct);
 		
-		Product existingProduct = repositoryService.findProductByID(productId);
+		Product existingProduct = (Product) repositoryService.findCartItemById(productId);
 		Assert.assertTrue(existingProduct != null && existingProduct.equals(newProduct));
 	}
 	
@@ -95,7 +95,7 @@ public class RepositoryServiceImplTest extends AbstractTest {
 		VariantProduct newProduct = new VariantProductImpl(productId, attributes, variants, variantAttributeTuple);
 		repositoryService.saveProduct(newProduct);
 		
-		VariantProduct existingProduct = (VariantProduct) repositoryService.findProductByID(productId);
+		VariantProduct existingProduct = (VariantProduct) repositoryService.findCartItemById(productId);
 		Assert.assertTrue(existingProduct != null && existingProduct.equals(newProduct));
 	}
 	

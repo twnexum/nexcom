@@ -1,12 +1,14 @@
 package de.nexum.commerce.domain.product.impl;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 import de.nexum.commerce.domain.patterns.impl.AbstractIdentifiableItemImpl;
 import de.nexum.commerce.domain.product.Attribute;
 import de.nexum.commerce.domain.product.Price;
 import de.nexum.commerce.domain.product.Product;
+import de.nexum.commerce.util.AttributeUtils;
 
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
@@ -51,6 +53,11 @@ public class ProductImpl extends AbstractIdentifiableItemImpl implements Product
 		return otherProduct.isVariantProduct().equals(this.isVariantProduct())
 				&& otherProduct.getPrice().equals(this.getPrice())
 				&& otherProduct.getAttributes().equals(this.getAttributes());
+	}
+
+	@Override
+	public Map<String, String> getAttributesMap() {		
+		return AttributeUtils.asMap(getAttributes());
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -18,6 +19,7 @@ import de.nexum.commerce.domain.address.ShippingAddress;
 import de.nexum.commerce.domain.cart.CartPosition;
 import de.nexum.commerce.domain.cart.ShoppingCart;
 import de.nexum.commerce.domain.patterns.CartItem;
+import de.nexum.commerce.domain.patterns.impl.AbstractIdentifiableItemImpl;
 import de.nexum.commerce.domain.payment.Payment;
 import de.nexum.commerce.domain.product.Price;
 
@@ -26,7 +28,7 @@ import de.nexum.commerce.domain.product.Price;
  */
 @Component("shoppingCart")
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.INTERFACES)
-public class ShoppingCartImpl implements ShoppingCart, Serializable {
+public class ShoppingCartImpl extends AbstractIdentifiableItemImpl implements ShoppingCart, Serializable {
 
 	private static final long serialVersionUID = 8739750058472597752L;
 	
@@ -39,9 +41,11 @@ public class ShoppingCartImpl implements ShoppingCart, Serializable {
 	private Payment payment;
 	
 	public ShoppingCartImpl() {
-		
-		super();
-		
+		this(UUID.randomUUID().toString());
+	}
+	
+	public ShoppingCartImpl(String id) {
+		super(id);		
 		this.cartPositionsById = new HashMap<String, CartPosition>();
 		this.currency = Currency.getInstance("EUR");
 	}

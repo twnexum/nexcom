@@ -1,5 +1,6 @@
 package de.nexum.commerce.domain.patterns;
 
+import java.util.Map;
 import java.util.Set;
 
 import de.nexum.commerce.domain.product.Attribute;
@@ -11,5 +12,7 @@ import de.nexum.commerce.domain.product.Attribute;
 public interface CartItem extends IdentifiableItem, PricedItem {
 	
 	Set<Attribute> getAttributes();
+	
+	Map<String, String> getAttributesMap();
 	
 }

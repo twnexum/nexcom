@@ -8,7 +8,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +20,6 @@ import de.nexum.commerce.domain.product.impl.ProductImpl;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-@Repository
 public class PgGenericProductDAOImpl extends JdbcDaoSupport implements GenericDAO<Product> {
 	
 	private static final String SQL_INSERT = "INSERT INTO PRODUCTS (ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES) VALUES (?,FALSE,NULL,NULL)";

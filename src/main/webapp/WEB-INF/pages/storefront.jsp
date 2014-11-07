@@ -36,8 +36,8 @@
 				<form name="addToCart_${cartItem.id}" id="addToCart_${cartItem.id}" action="/addToCart" method="post">
 					<input type="hidden" name="cartItemId" value="${cartItem.id}" />				
 					<tr>
-						<td><img src="${cartItem.attributes.image}"/></td>
-						<td>${cartItem.attributes.title}</td>
+						<td><img src="${cartItem.attributesMap.image}"/></td>
+						<td>${cartItem.attributesMap.title}</td>
 						<td>${storefrontPosition.price.amount}</td>
 						<td>${storefrontPosition.price.currency}</td>
 						<c:choose>

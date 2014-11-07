@@ -50,7 +50,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			}			
 		}
 		
-		Price shoppingCartTotalPrice = new PriceImpl(null, shoppingCartTotalAmount, currency);
+		Price shoppingCartTotalPrice = new PriceImpl(shoppingCart.getId(), shoppingCartTotalAmount, currency);
 		shoppingCart.setTotalPrice(shoppingCartTotalPrice);
 		
 		return shoppingCartTotalPrice;
