@@ -3,7 +3,7 @@ package de.nexum.commerce.backend.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.nexum.commerce.backend.dao.GenericDAO;
@@ -18,7 +18,7 @@ import de.nexum.commerce.domain.product.VariantProduct;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-@Service
+@Repository
 public class RepositoryServiceImpl implements RepositoryService {
 
 	@Autowired
