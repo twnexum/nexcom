@@ -22,7 +22,7 @@ import de.nexum.commerce.domain.inventory.impl.InventoryPositionImpl;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public class PgGenericInventoryDAOImpl extends JdbcDaoSupport implements GenericDAO<InventoryPosition> {
+public class GenericInventoryDAOImpl extends JdbcDaoSupport implements GenericDAO<InventoryPosition> {
 	
 	@Autowired
 	private Properties queryProperties;

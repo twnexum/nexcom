@@ -19,7 +19,7 @@ import de.nexum.commerce.domain.product.impl.VariantImpl;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public class PgGenericVariantDAOImpl extends JdbcDaoSupport implements GenericDAO<Variant> {
+public class GenericVariantDAOImpl extends JdbcDaoSupport implements GenericDAO<Variant> {
 	
 	@Autowired
 	private Properties queryProperties;

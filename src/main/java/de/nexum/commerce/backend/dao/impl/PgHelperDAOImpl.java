@@ -2,7 +2,9 @@ package de.nexum.commerce.backend.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -12,12 +14,15 @@ import de.nexum.commerce.backend.dao.HelperDAO;
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
 public class PgHelperDAOImpl extends JdbcDaoSupport implements HelperDAO {
+	
+	@Autowired
+	private Properties queryProperties;
 
 	@Override
 	public Boolean isVariantProduct(String productId) {
 		
 		Boolean isVariantProduct = (Boolean) getJdbcTemplate().queryForObject(
-			"SELECT IS_VARIANT_PRODUCT FROM PRODUCTS WHERE ID = ?", new Object[] { productId }, new RowMapper<Boolean>() {
+			queryProperties.getProperty("check_is_variant_product_for_productId"), new Object[] { productId }, new RowMapper<Boolean>() {
 	
 				@Override
 				public Boolean mapRow(ResultSet res, int rowNum) throws SQLException {
@@ -32,7 +37,7 @@ public class PgHelperDAOImpl extends JdbcDaoSupport implements HelperDAO {
 	public Boolean isVariant(String cartItemId) {
 
 		int found = getJdbcTemplate().queryForObject(
-			"SELECT COUNT(*) FROM PRODUCTS WHERE ID = ? AND IS_VARIANT_PRODUCT = FALSE AND ITEM_ID IS NOT NULL", 
+			queryProperties.getProperty("check_is_variant_for_cartItemId"), 
 			new Object[] { cartItemId }, Integer.class);
 		
 		return (found == 1);

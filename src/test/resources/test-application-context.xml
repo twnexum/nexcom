@@ -3,7 +3,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
@@ -33,9 +32,14 @@
 	    <property name="locations" value="classpath:postgresql-queries.xml" />
 	</bean>	
 	
-	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:configLocation="classpath:ehcache.xml" p:shared="true" />
+	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:ehcache.xml" />
+		<property name="shared" value="true" />
+	</bean>
 	
-	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="ehcache" />	
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="ehcache" />
+	</bean>	
 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
@@ -65,31 +69,31 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean> 	
 	
-	<bean id="priceDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericPriceDAOImpl">
+	<bean id="priceDAO" class="de.nexum.commerce.backend.dao.impl.GenericPriceDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<bean id="attributeDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericAttributeDAOImpl">
+	<bean id="attributeDAO" class="de.nexum.commerce.backend.dao.impl.GenericAttributeDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<bean id="productDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericProductDAOImpl">
+	<bean id="productDAO" class="de.nexum.commerce.backend.dao.impl.GenericProductDAOImpl">
 		<property name="dataSource" ref="dataSource" />		
 	</bean>	
 	
-	<bean id="variantDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericVariantDAOImpl">
+	<bean id="variantDAO" class="de.nexum.commerce.backend.dao.impl.GenericVariantDAOImpl">
 		<property name="dataSource" ref="dataSource" />		
 	</bean>			
 	
-	<bean id="collectionVariantDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericVariantCollectionDAOImpl">
+	<bean id="collectionVariantDAO" class="de.nexum.commerce.backend.dao.impl.GenericVariantCollectionDAOImpl">
 		<property name="dataSource" ref="dataSource" />	
 	</bean>			
 	
-	<bean id="variantProductDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericVariantProductDAOImpl">
+	<bean id="variantProductDAO" class="de.nexum.commerce.backend.dao.impl.GenericVariantProductDAOImpl">
 		<property name="dataSource" ref="dataSource" />			
 	</bean>	
 	
-	<bean id="inventoryDAO" class="de.nexum.commerce.backend.dao.impl.PgGenericInventoryDAOImpl">
+	<bean id="inventoryDAO" class="de.nexum.commerce.backend.dao.impl.GenericInventoryDAOImpl">
 		<property name="dataSource" ref="dataSource" />				
 	</bean>		
 	

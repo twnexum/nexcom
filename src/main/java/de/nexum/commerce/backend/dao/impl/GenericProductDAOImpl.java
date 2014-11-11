@@ -21,7 +21,7 @@ import de.nexum.commerce.domain.product.impl.ProductImpl;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public class PgGenericProductDAOImpl extends JdbcDaoSupport implements GenericDAO<Product> {
+public class GenericProductDAOImpl extends JdbcDaoSupport implements GenericDAO<Product> {
 	
 	@Autowired
 	private Properties queryProperties;

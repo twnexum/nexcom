@@ -25,7 +25,7 @@ import de.nexum.commerce.domain.product.impl.AttributeImpl;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public class PgGenericAttributeDAOImpl extends JdbcDaoSupport implements GenericDAO<Set<Attribute>> {
+public class GenericAttributeDAOImpl extends JdbcDaoSupport implements GenericDAO<Set<Attribute>> {
 	
 	@Autowired
 	private Properties queryProperties;

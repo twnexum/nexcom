@@ -7,14 +7,20 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.nexum.commerce.backend.services.RepositoryService;
 import de.nexum.commerce.domain.inventory.InventoryPosition;
@@ -34,11 +40,14 @@ import de.nexum.test.AbstractTest;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
+@Transactional
+@TransactionConfiguration(transactionManager = "transactionManager")
 @ContextConfiguration(locations = {"classpath:/test-application-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RepositoryServiceImplTest extends AbstractTest {
 	
 	@Autowired
+	@Resource
 	private RepositoryService repositoryService;
 	
 	@Before
@@ -46,7 +55,13 @@ public class RepositoryServiceImplTest extends AbstractTest {
 		deleteDatabase();
 	}
 
+	@PostConstruct
+	public void postConstruct() {
+		Assert.assertNotNull(repositoryService);
+	}
+	
 	@Test
+	@Rollback(true)
 	public void testInsertProduct() {
 		
 		String productId = UUID.randomUUID().toString();
@@ -66,6 +81,7 @@ public class RepositoryServiceImplTest extends AbstractTest {
 	}
 	
 	@Test
+	@Rollback(true)
 	public void testInsertVariantProduct() {
 		
 		String productId = UUID.randomUUID().toString();
@@ -100,6 +116,7 @@ public class RepositoryServiceImplTest extends AbstractTest {
 	}
 	
 	@Test
+	@Rollback(true)
 	public void testInsertInventory() {
 		
 		String productId = UUID.randomUUID().toString();

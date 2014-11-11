@@ -80,6 +80,14 @@
 	</entry>
 	<entry key="select_variants">
     	<![CDATA[SELECT ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES FROM PRODUCTS WHERE ID = ?]]>
-	</entry>			
+	</entry>	
+	
+	<!-- various helper queries -->
+	<entry key="check_is_variant_product_for_productId">
+    	<![CDATA[SELECT IS_VARIANT_PRODUCT FROM PRODUCTS WHERE ID = ?]]>
+	</entry>
+	<entry key="check_is_variant_for_cartItemId">
+    	<![CDATA[SELECT COUNT(*) FROM PRODUCTS WHERE ID = ? AND IS_VARIANT_PRODUCT = FALSE AND ITEM_ID IS NOT NULL]]>
+	</entry>	
 	
 </properties>
