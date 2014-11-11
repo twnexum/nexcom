@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -24,16 +26,15 @@ import de.nexum.commerce.domain.product.impl.AttributeImpl;
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
 public class PgGenericAttributeDAOImpl extends JdbcDaoSupport implements GenericDAO<Set<Attribute>> {
-
-	private static final String SQL_INSERT = "INSERT INTO ATTRIBUTES (ID, ITEM_ID, ATTR_KEY, ATTR_VALUE) VALUES (?,?,?,?)";
-	private static final String SQL_DELETE = "DELETE FROM ATTRIBUTES WHERE ITEM_ID = ?";
-	private static final String SQL_SELECT = "SELECT ID, ITEM_ID, ATTR_KEY, ATTR_VALUE FROM ATTRIBUTES WHERE ITEM_ID = ?";
+	
+	@Autowired
+	private Properties queryProperties;
 	
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public void save(final Set<Attribute> attributes) {
 
-		getJdbcTemplate().batchUpdate(SQL_INSERT, new BatchPreparedStatementSetter() {
+		getJdbcTemplate().batchUpdate(queryProperties.getProperty("insert_attributes"), new BatchPreparedStatementSetter() {
 
 			final List<Attribute> attributeList = new ArrayList<Attribute>(attributes);
 
@@ -69,13 +70,13 @@ public class PgGenericAttributeDAOImpl extends JdbcDaoSupport implements Generic
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public void delete(Set<Attribute> attributes) {
-		getJdbcTemplate().update(SQL_DELETE, new Object[] { attributes.iterator().next().getProductId() });
+		getJdbcTemplate().update(queryProperties.getProperty("delete_attributes"), new Object[] { attributes.iterator().next().getProductId() });
 	}
 
 	@Override
 	public Set<Attribute> findByID(String itemId) {
 		
-		Set<Attribute> attributes = getJdbcTemplate().query(SQL_SELECT, new ResultSetExtractor<Set<Attribute>>() {
+		Set<Attribute> attributes = getJdbcTemplate().query(queryProperties.getProperty("select_attributes"), new ResultSetExtractor<Set<Attribute>>() {
 			
 			@Override
 			public Set<Attribute> extractData(ResultSet res) throws SQLException, DataAccessException {

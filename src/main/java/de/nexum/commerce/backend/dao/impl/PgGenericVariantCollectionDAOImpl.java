@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,10 @@ import de.nexum.commerce.domain.product.impl.VariantImpl;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public class PgGenericCollectionVariantDAOImpl extends JdbcDaoSupport implements GenericDAO<Set<Variant>> {
+public class PgGenericVariantCollectionDAOImpl extends JdbcDaoSupport implements GenericDAO<Set<Variant>> {
 	
-	private static final String SQL_INSERT = "INSERT INTO PRODUCTS (ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES) VALUES (?,FALSE,?,NULL)";
-	private static final String SQL_DELETE = "DELETE FROM PRODUCTS WHERE ITEM_ID = ?";
-	private static final String SQL_SELECT = "SELECT ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES FROM PRODUCTS WHERE ITEM_ID = ?";
+	@Autowired
+	private Properties queryProperties;
 
 	@Autowired
 	private GenericDAO<Price> priceDAO;
@@ -42,7 +42,7 @@ public class PgGenericCollectionVariantDAOImpl extends JdbcDaoSupport implements
 	@Transactional(propagation = Propagation.MANDATORY)
 	public void save(final Set<Variant> variants) {
 		
-		getJdbcTemplate().batchUpdate(SQL_INSERT, new BatchPreparedStatementSetter() {
+		getJdbcTemplate().batchUpdate(queryProperties.getProperty("insert_variants_collection"), new BatchPreparedStatementSetter() {
 
 			final List<Variant> variantList = new ArrayList<Variant>(variants);
 
@@ -80,13 +80,13 @@ public class PgGenericCollectionVariantDAOImpl extends JdbcDaoSupport implements
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public void delete(Set<Variant> variants) {		
-		getJdbcTemplate().update(SQL_DELETE, new Object[] { variants.iterator().next().getProductId() });
+		getJdbcTemplate().update(queryProperties.getProperty("delete_variants_collection"), new Object[] { variants.iterator().next().getProductId() });
 	}
 
 	@Override
 	public Set<Variant> findByID(String itemId) {
 		
-		Set<Variant> variants = getJdbcTemplate().query(SQL_SELECT, new ResultSetExtractor<Set<Variant>>() {
+		Set<Variant> variants = getJdbcTemplate().query(queryProperties.getProperty("select_variants_collection"), new ResultSetExtractor<Set<Variant>>() {
 			
 			@Override
 			public Set<Variant> extractData(ResultSet res) throws SQLException, DataAccessException {

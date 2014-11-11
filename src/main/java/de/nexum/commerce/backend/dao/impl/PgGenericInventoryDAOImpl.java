@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,16 +24,14 @@ import de.nexum.commerce.domain.inventory.impl.InventoryPositionImpl;
  */
 public class PgGenericInventoryDAOImpl extends JdbcDaoSupport implements GenericDAO<InventoryPosition> {
 	
-	private static final String SQL_INSERT = "INSERT INTO INVENTORIES (ID, ITEM_ID, QUANTITY) VALUES (?,?,?)";
-	private static final String SQL_DELETE = "DELETE FROM INVENTORIES WHERE ID = ?";
-	private static final String SQL_SELECT = "SELECT ID, ITEM_ID, QUANTITY FROM INVENTORIES WHERE ITEM_ID = ?";
-	private static final String SQL_SELECT_ALL = "SELECT ID, ITEM_ID, QUANTITY FROM INVENTORIES";
+	@Autowired
+	private Properties queryProperties;
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public void save(InventoryPosition inventoryPosition) {
 		getJdbcTemplate().update(
-				SQL_INSERT,
+				queryProperties.getProperty("insert_inventories"),
 				new Object[] { inventoryPosition.getId(),
 						inventoryPosition.getProductId(),
 						inventoryPosition.getAvailableQuantity() });		
@@ -47,14 +47,15 @@ public class PgGenericInventoryDAOImpl extends JdbcDaoSupport implements Generic
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public void delete(InventoryPosition inventoryPosition) {
-		getJdbcTemplate().update(SQL_DELETE, new Object[] { inventoryPosition.getId() });		
+		getJdbcTemplate().update(queryProperties.getProperty("delete_inventories"), 
+				new Object[] { inventoryPosition.getId() });		
 	}
 
 	@Override
 	public InventoryPosition findByID(String id) {
 
 		InventoryPosition inventoryPosition = (InventoryPosition) getJdbcTemplate().queryForObject(
-			SQL_SELECT, new Object[] { id }, new RowMapper<InventoryPosition>() {
+				queryProperties.getProperty("select_inventories"), new Object[] { id }, new RowMapper<InventoryPosition>() {
 
 				@Override
 				public InventoryPosition mapRow(ResultSet res, int rowNum) throws SQLException {
@@ -69,7 +70,8 @@ public class PgGenericInventoryDAOImpl extends JdbcDaoSupport implements Generic
 	@Override
 	public Collection<InventoryPosition> findAll() {
 
-		List<InventoryPosition> inventoryPositions = getJdbcTemplate().query(SQL_SELECT_ALL, new ResultSetExtractor<List<InventoryPosition>>() {
+		List<InventoryPosition> inventoryPositions = getJdbcTemplate().query(queryProperties.getProperty("select_all_inventories"), 
+				new ResultSetExtractor<List<InventoryPosition>>() {
 			
 			@Override
 			public List<InventoryPosition> extractData(ResultSet res) throws SQLException, DataAccessException {

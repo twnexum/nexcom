@@ -3,6 +3,7 @@ package de.nexum.commerce.backend.dao.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Properties;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,8 @@ import de.nexum.commerce.domain.product.impl.ProductImpl;
  */
 public class PgGenericProductDAOImpl extends JdbcDaoSupport implements GenericDAO<Product> {
 	
-	private static final String SQL_INSERT = "INSERT INTO PRODUCTS (ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES) VALUES (?,FALSE,NULL,NULL)";
-	private static final String SQL_DELETE = "DELETE FROM PRODUCTS WHERE ID = ?";
-	private static final String SQL_SELECT = "SELECT ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES FROM PRODUCTS WHERE ID = ?";
+	@Autowired
+	private Properties queryProperties;
 	
 	@Autowired
 	private GenericDAO<Price> priceDAO;
@@ -37,7 +37,7 @@ public class PgGenericProductDAOImpl extends JdbcDaoSupport implements GenericDA
 	public void save(Product product) {				
 		priceDAO.save(product.getPrice());
 		attributeDAO.save(product.getAttributes());
-		getJdbcTemplate().update(SQL_INSERT, new Object[] { product.getId() });
+		getJdbcTemplate().update(queryProperties.getProperty("insert_products"), new Object[] { product.getId() });
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class PgGenericProductDAOImpl extends JdbcDaoSupport implements GenericDA
 	public void delete(Product product) {		
 		priceDAO.delete(product.getPrice());
 		attributeDAO.delete(product.getAttributes());
-		getJdbcTemplate().update(SQL_DELETE, new Object[] { product.getId() });
+		getJdbcTemplate().update(queryProperties.getProperty("delete_products"), new Object[] { product.getId() });
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class PgGenericProductDAOImpl extends JdbcDaoSupport implements GenericDA
 		final Set<Attribute> attributes = attributeDAO.findByID(productId);
 
 		Product product = (Product) getJdbcTemplate().queryForObject(
-			SQL_SELECT, new Object[] { productId }, new RowMapper<Product>() {
+				queryProperties.getProperty("select_products"), new Object[] { productId }, new RowMapper<Product>() {
 	
 				@Override
 				public Product mapRow(ResultSet res, int rowNum) throws SQLException {

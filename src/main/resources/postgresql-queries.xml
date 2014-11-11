@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<!-- entity ATTRIBUTES -->
+	<entry key="insert_attributes">
+    	<![CDATA[INSERT INTO ATTRIBUTES (ID, ITEM_ID, ATTR_KEY, ATTR_VALUE) VALUES (?,?,?,?)]]>
+	</entry>
+	<entry key="delete_attributes">
+    	<![CDATA[DELETE FROM ATTRIBUTES WHERE ITEM_ID = ?]]>
+	</entry>
+	<entry key="select_attributes">
+    	<![CDATA[SELECT ID, ITEM_ID, ATTR_KEY, ATTR_VALUE FROM ATTRIBUTES WHERE ITEM_ID = ?]]>
+	</entry>	
+	
+	<!-- entity INVENTORIES -->
+	<entry key="insert_inventories">
+    	<![CDATA[INSERT INTO INVENTORIES (ID, ITEM_ID, QUANTITY) VALUES (?,?,?)]]>
+	</entry>	
+	<entry key="delete_inventories">
+    	<![CDATA[DELETE FROM INVENTORIES WHERE ID = ?]]>
+	</entry>	
+	<entry key="select_inventories">
+    	<![CDATA[SELECT ID, ITEM_ID, QUANTITY FROM INVENTORIES WHERE ITEM_ID = ?]]>
+	</entry>	
+	<entry key="select_all_inventories">
+    	<![CDATA[SELECT ID, ITEM_ID, QUANTITY FROM INVENTORIES]]>
+	</entry>		
+	
+	<!-- entity PRICES -->
+	<entry key="insert_prices">
+    	<![CDATA[INSERT INTO PRICES (ID, ITEM_ID, AMOUNT, CURRENCY_CODE) VALUES (?,?,?,?)]]>
+	</entry>
+	<entry key="delete_prices">
+    	<![CDATA[DELETE FROM PRICES WHERE ID = ?]]>
+	</entry>
+	<entry key="select_prices">
+    	<![CDATA[SELECT ID, ITEM_ID, AMOUNT, CURRENCY_CODE FROM PRICES WHERE ITEM_ID = ?]]>
+	</entry>		
+	
+	<!-- entity PRODUCTS (non variant) -->
+	<entry key="insert_products">
+    	<![CDATA[INSERT INTO PRODUCTS (ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES) VALUES (?,FALSE,NULL,NULL)]]>
+	</entry>
+	<entry key="delete_products">
+    	<![CDATA[DELETE FROM PRODUCTS WHERE ID = ?]]>
+	</entry>
+	<entry key="select_products">
+    	<![CDATA[SELECT ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES FROM PRODUCTS WHERE ID = ?]]>
+	</entry>
+	
+	<!-- entity PRODUCTS (variant) -->
+	<entry key="insert_variant_products">
+    	<![CDATA[INSERT INTO PRODUCTS (ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES) VALUES (?,TRUE,NULL,?)]]>
+	</entry>
+	<entry key="delete_variant_products">
+    	<![CDATA[DELETE FROM PRODUCTS WHERE ID = ?]]>
+	</entry>
+	<entry key="select_variant_products">
+    	<![CDATA[SELECT ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES FROM PRODUCTS WHERE ID = ?]]>
+	</entry>	
+	
+	<!-- entity VARIANTS (collection of...) -->
+	<entry key="insert_variants_collection">
+    	<![CDATA[INSERT INTO PRODUCTS (ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES) VALUES (?,FALSE,?,NULL)]]>
+	</entry>
+	<entry key="delete_variants_collection">
+    	<![CDATA[DELETE FROM PRODUCTS WHERE ITEM_ID = ?]]>
+	</entry>
+	<entry key="select_variants_collection">
+    	<![CDATA[SELECT ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES FROM PRODUCTS WHERE ITEM_ID = ?]]>
+	</entry>	
+	
+	<!-- entity VARIANTS (singleton) -->
+	<entry key="insert_variants">
+    	<![CDATA[INSERT INTO PRODUCTS (ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES) VALUES (?,FALSE,?,NULL)]]>
+	</entry>
+	<entry key="delete_variants">
+    	<![CDATA[DELETE FROM PRODUCTS WHERE ID = ?]]>
+	</entry>
+	<entry key="select_variants">
+    	<![CDATA[SELECT ID, IS_VARIANT_PRODUCT, ITEM_ID, VARIANT_ATTRIBUTES FROM PRODUCTS WHERE ID = ?]]>
+	</entry>			
+	
+</properties>

@@ -3,6 +3,8 @@ package de.nexum.commerce.backend.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +39,8 @@ public class RepositoryServiceImpl implements RepositoryService {
 	private HelperDAO helperDAO;
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
+	@CacheEvict(value = "products", allEntries=true)
 	public void saveProduct(Product product) {
 		if (product.isVariantProduct()) {
 			variantProductDAO.save((VariantProduct) product);
@@ -47,6 +50,8 @@ public class RepositoryServiceImpl implements RepositoryService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	@Cacheable("products")
 	public CartItem findCartItemById(String cartItemId) {
 		if (helperDAO.isVariant(cartItemId)) {
 			return variantDAO.findByID(cartItemId);
@@ -58,12 +63,15 @@ public class RepositoryServiceImpl implements RepositoryService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
+	@CacheEvict(value = "inventories", allEntries=true)
 	public void saveInventory(InventoryPosition inventoryPosition) {
 		inventoryDAO.save(inventoryPosition);		
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
+	@Cacheable("inventories")
 	public InventoryPosition findInventoryByProductId(String productID) {
 		return inventoryDAO.findByID(productID);
 	}	

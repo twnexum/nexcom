@@ -6,6 +6,8 @@ import de.nexum.commerce.domain.patterns.IdentifiableItem;
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
 public abstract class AbstractIdentifiableItemImpl implements IdentifiableItem {
+
+	private static final long serialVersionUID = 4165762970117504974L;
 	
 	private String id;
 
