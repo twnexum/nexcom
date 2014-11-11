@@ -15,6 +15,8 @@
         http://www.springframework.org/schema/cache/spring-cache.xsd">
 
 	<context:annotation-config />
+	
+	<!-- scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="de.nexum.commerce" />
     
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -30,6 +32,7 @@
 	    <property name="locations" value="classpath:postgresql-queries.xml" />
 	</bean>		
 	
+	<!-- Ehcache library setup -->
 	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:ehcache.xml" />
 		<property name="shared" value="true" />
@@ -43,24 +46,26 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
+	<!-- commons-DBCP datasource setup -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
 		<property name="driverClassName" value="${jdbc.driverClassName}"/>
 		<property name="url" value="${jdbc.url}"/>
 		<property name="username" value="${jdbc.username}"/>
 		<property name="password" value="${jdbc.password}"/>
-		<property name="testWhileIdle" value="true" />
-		<property name="testOnBorrow" value="true" />
-		<property name="testOnReturn" value="false" />
-		<property name="validationQuery" value="${jdbc.validationQuery}" />
-		<property name="timeBetweenEvictionRunsMillis" value="5000" />
-		<property name="maxActive" value="50" />
-		<property name="minIdle" value="10" />
-		<property name="maxWait" value="10000" />
-		<property name="initialSize" value="10" />
-		<property name="removeAbandonedTimeout" value="60" />
-		<property name="removeAbandoned" value="true" />
-		<property name="logAbandoned" value="true" />
-		<property name="minEvictableIdleTimeMillis" value="30000" />
+		<property name="testWhileIdle" value="${dbcp.testWhileIdle}" />
+		<property name="testOnBorrow" value="${dbcp.testOnBorrow}" />
+		<property name="testOnReturn" value="${dbcp.testOnReturn}" />
+		<property name="validationQuery" value="${dbcp.validationQuery}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${dbcp.timeBetweenEvictionRunsMillis}" />
+		<property name="maxActive" value="${dbcp.maxActive}" />
+		<property name="minIdle" value="${dbcp.minIdle}" />
+		<property name="maxIdle" value="${dbcp.maxIdle}" />
+		<property name="maxWait" value="${dbcp.maxWait}" />
+		<property name="initialSize" value="${dbcp.initialSize}" />
+		<property name="removeAbandonedTimeout" value="${dbcp.removeAbandonedTimeout}" />
+		<property name="removeAbandoned" value="${dbcp.removeAbandoned}" />
+		<property name="logAbandoned" value="${dbcp.logAbandoned}" />
+		<property name="minEvictableIdleTimeMillis" value="${dbcp.minEvictableIdleTimeMillis}" />
 	</bean>
 	
 	<bean id="priceDAO" class="de.nexum.commerce.backend.dao.impl.GenericPriceDAOImpl">

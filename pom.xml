@@ -17,6 +17,7 @@
 		<log4j.version>1.2.17</log4j.version>
 	</properties>
 	<dependencies>
+		<!-- logging dependencies -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -32,6 +33,7 @@
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
+		<!-- Spring framework dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
@@ -83,6 +85,7 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<!-- Apache Jakarta commons dependencies -->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -98,6 +101,7 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<!-- Sun J2EE spec dependencies -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -110,22 +114,20 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- PostgreSQL database dependencies -->
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgres.jdbc.version}</version>
 		</dependency>
+		<!-- JUnit dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 			<version>${junit.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib-nodep</artifactId>
-			<version>2.2</version>
-		</dependency>
+		<!-- ehcache dependencies -->
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
@@ -136,6 +138,12 @@
 			<artifactId>ehcache-spring-annotations</artifactId>
 			<version>1.2.0</version>
 		</dependency>
+		<!-- misc. dependencies -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>2.2</version>
+		</dependency>		
 	</dependencies>
 	<build>
 		<plugins>
