@@ -16,6 +16,8 @@ import de.nexum.commerce.util.AttributeUtils;
  */
 public class VariantImpl extends AbstractIdentifiableItemImpl implements Variant {
 
+	private static final long serialVersionUID = -5861227913754961679L;
+	
 	private Set<Attribute> attributes;
 	private Price price;
 	private String productId;

@@ -9,6 +9,8 @@ import de.nexum.commerce.domain.patterns.impl.AbstractIdentifiableItemImpl;
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
 public class InventoryPositionImpl extends AbstractIdentifiableItemImpl implements InventoryPosition {
+
+	private static final long serialVersionUID = 1888082254115771264L;
 	
 	private Integer availableQuantity;
 	private String productId;

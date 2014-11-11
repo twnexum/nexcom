@@ -13,6 +13,8 @@ import de.nexum.commerce.domain.product.Price;
  */
 public class PriceImpl extends AbstractIdentifiableItemImpl implements Price {
 
+	private static final long serialVersionUID = 3629149465167007838L;
+	
 	private BigDecimal amount;
 	private Currency currency;
 	private String productId;

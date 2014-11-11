@@ -9,6 +9,8 @@ import de.nexum.commerce.domain.product.Attribute;
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
 public class AttributeImpl extends AbstractIdentifiableItemImpl implements Attribute {
+
+	private static final long serialVersionUID = 5964015155543469945L;
 	
 	private String key;
 	private String value;

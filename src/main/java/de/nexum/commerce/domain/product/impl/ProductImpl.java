@@ -14,7 +14,9 @@ import de.nexum.commerce.util.AttributeUtils;
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
 public class ProductImpl extends AbstractIdentifiableItemImpl implements Product {
-		
+
+	private static final long serialVersionUID = -5883145797480118025L;
+	
 	private Set<Attribute> attributes;
 	private Price price;
 	

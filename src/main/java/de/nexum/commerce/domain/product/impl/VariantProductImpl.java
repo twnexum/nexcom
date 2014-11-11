@@ -14,6 +14,8 @@ import de.nexum.commerce.domain.product.VariantProduct;
  */
 public class VariantProductImpl extends ProductImpl implements VariantProduct {
 
+	private static final long serialVersionUID = 4540711182949305003L;
+	
 	private Set<Variant> variants;
 	private Set<String> variantAttributeTuple;
 	
