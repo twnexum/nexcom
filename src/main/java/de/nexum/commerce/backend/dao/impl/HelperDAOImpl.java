@@ -13,7 +13,7 @@ import de.nexum.commerce.backend.dao.HelperDAO;
 /**
  * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
  */
-public class PgHelperDAOImpl extends JdbcDaoSupport implements HelperDAO {
+public class HelperDAOImpl extends JdbcDaoSupport implements HelperDAO {
 	
 	@Autowired
 	private Properties queryProperties;

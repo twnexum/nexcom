@@ -102,7 +102,7 @@
 		<property name="dataSource" ref="dataSource" />				
 	</bean>		
 	
-	<bean id="helperDAO" class="de.nexum.commerce.backend.dao.impl.PgHelperDAOImpl">
+	<bean id="helperDAO" class="de.nexum.commerce.backend.dao.impl.HelperDAOImpl">
 		<property name="dataSource" ref="dataSource" />				
 	</bean>		
 	
