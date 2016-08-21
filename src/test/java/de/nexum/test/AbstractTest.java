@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- * @author <a href="mailto:thomas.weckert@nexum.de">Thomas Weckert</a>
+ * @author Thomas Weckert
  */
 public abstract class AbstractTest implements ApplicationContextAware {
 	

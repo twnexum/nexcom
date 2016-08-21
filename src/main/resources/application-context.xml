@@ -17,7 +17,7 @@
 	<context:annotation-config />
 	
 	<!-- scans within the base package of the application for @Components to configure as beans -->
-    <context:component-scan base-package="de.nexum.commerce" />
+    <context:component-scan base-package="javax.commerce" />
     
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="ignoreResourceNotFound" value="true" />
@@ -68,35 +68,35 @@
 		<property name="minEvictableIdleTimeMillis" value="${dbcp.minEvictableIdleTimeMillis}" />
 	</bean>
 	
-	<bean id="priceDAO" class="de.nexum.commerce.backend.dao.impl.GenericPriceDAOImpl">
+	<bean id="priceDAO" class="javax.commerce.backend.dao.impl.GenericPriceDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<bean id="attributeDAO" class="de.nexum.commerce.backend.dao.impl.GenericAttributeDAOImpl">
+	<bean id="attributeDAO" class="javax.commerce.backend.dao.impl.GenericAttributeDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<bean id="productDAO" class="de.nexum.commerce.backend.dao.impl.GenericProductDAOImpl">
+	<bean id="productDAO" class="javax.commerce.backend.dao.impl.GenericProductDAOImpl">
 		<property name="dataSource" ref="dataSource" />		
 	</bean>	
 	
-	<bean id="variantDAO" class="de.nexum.commerce.backend.dao.impl.GenericVariantDAOImpl">
+	<bean id="variantDAO" class="javax.commerce.backend.dao.impl.GenericVariantDAOImpl">
 		<property name="dataSource" ref="dataSource" />		
 	</bean>			
 	
-	<bean id="collectionVariantDAO" class="de.nexum.commerce.backend.dao.impl.GenericVariantCollectionDAOImpl">
+	<bean id="collectionVariantDAO" class="javax.commerce.backend.dao.impl.GenericVariantCollectionDAOImpl">
 		<property name="dataSource" ref="dataSource" />	
 	</bean>		
 	
-	<bean id="variantProductDAO" class="de.nexum.commerce.backend.dao.impl.GenericVariantProductDAOImpl">
+	<bean id="variantProductDAO" class="javax.commerce.backend.dao.impl.GenericVariantProductDAOImpl">
 		<property name="dataSource" ref="dataSource" />				
 	</bean>	
 	
-	<bean id="inventoryDAO" class="de.nexum.commerce.backend.dao.impl.GenericInventoryDAOImpl">
+	<bean id="inventoryDAO" class="javax.commerce.backend.dao.impl.GenericInventoryDAOImpl">
 		<property name="dataSource" ref="dataSource" />				
 	</bean>		
 	
-	<bean id="helperDAO" class="de.nexum.commerce.backend.dao.impl.HelperDAOImpl">
+	<bean id="helperDAO" class="javax.commerce.backend.dao.impl.HelperDAOImpl">
 		<property name="dataSource" ref="dataSource" />				
 	</bean>			 
 

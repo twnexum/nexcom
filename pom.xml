@@ -9,7 +9,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
 		<jetty.version>8.1.16.v20140903</jetty.version>
 		<spring.version>3.2.11.RELEASE</spring.version>
 		<postgres.jdbc.version>9.1-901.jdbc4</postgres.jdbc.version>
